@@ -45,9 +45,9 @@ class ScoreTransformer(BaseEstimator, TransformerMixin):
     def fit(self):
         pass
     
-    def predict(self, X):
+    def predict(self, X, n=5):
         sorted_items = self._sort_coo(X.tocoo())
-        return self._extract_topn_from_vector(self._cv.get_feature_names(), sorted_items, 10)
+        return self._extract_topn_from_vector(self._cv.get_feature_names(), sorted_items, n)
     
     def _sort_coo(self, coo_matrix):
         tuples = zip(coo_matrix.col, coo_matrix.data)
@@ -64,15 +64,8 @@ class ScoreTransformer(BaseEstimator, TransformerMixin):
 
         # word index and corresponding tf-idf score
         for idx, score in sorted_items:
-
             #keep track of feature name and its corresponding score
             score_vals.append(round(score, 3))
             feature_vals.append(feature_names[idx])
 
-        #create a tuples of feature,score
-        results = zip(feature_vals,score_vals)
-        #results= []
-        #for idx in range(len(feature_vals)):
-        #    results.append((feature_vals[idx], score_vals[idx]))
-
-        return list(results)
+        return feature_vals, score_vals

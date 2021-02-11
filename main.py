@@ -6,8 +6,10 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     text = request.args.get('text')
-    predictions = model.predict(text)
-    return jsonify({'predictions': predictions})
+    n = request.args.get('n')
+
+    words, scores = model.predict(text, n=int(n))
+    return jsonify({'topics': words})
 
 with open('model.pkl', 'rb') as model_file:
   model = pickle.load(model_file)
