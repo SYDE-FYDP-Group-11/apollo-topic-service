@@ -3,9 +3,6 @@ import re
 from sklearn.base import BaseEstimator, TransformerMixin
 from nltk import WordNetLemmatizer
 
-import nltk
-nltk.download('wordnet')
-
 class CleanerTransformer(BaseEstimator, TransformerMixin):
     def __init__(self, stop_words):
         self._stop_words = stop_words

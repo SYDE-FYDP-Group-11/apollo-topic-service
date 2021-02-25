@@ -1,2 +1,7 @@
 runtime: python38
 service: topic-service
+env_variables:
+  NLTK_DATA: './nltk_data/'
+instance_class: F2
+automatic_scaling:
+  max_concurrent_requests: 40
